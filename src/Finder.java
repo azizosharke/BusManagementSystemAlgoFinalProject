@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public record Finder(double w, Search v) {
+public record Finder(double w, Search v) {    // converted into record as it is better for plain data carriers
 
     public double weightFinder() {
         return w;
@@ -24,17 +24,18 @@ public record Finder(double w, Search v) {
         }
         return result;
     }
+
     @Override
-    public int hashCode(){
-        return Objects.hash(w,v);
+    public int hashCode() {
+        return Objects.hash(w, v);
     }
+
     @Override
     public String toString() {                // override for used variables
         return "Finder[" +
                 "w=" + w + ", " +
                 "v=" + v + ']';
     }
-
 }
 
 // finder class is finished
