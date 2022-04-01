@@ -6,7 +6,7 @@ public record Finder(double w, Search v) {
         return w;
     }
 
-    public Search getTargetVertex() {
+    public Search searchV() {
         return v;
     }
 
@@ -36,3 +36,5 @@ public record Finder(double w, Search v) {
     }
 
 }
+
+// finder class is finished
