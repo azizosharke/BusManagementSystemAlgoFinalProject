@@ -24,3 +24,4 @@ public record Finder(double w, Search v) {
         }
         return result;
     }
+}
