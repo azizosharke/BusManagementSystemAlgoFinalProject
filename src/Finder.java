@@ -11,7 +11,7 @@ public record Finder(double w, Search v) {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) {                                     // overriding and checking in the main system
         boolean result;
         if (obj == this) {
             result = true;
@@ -24,4 +24,15 @@ public record Finder(double w, Search v) {
         }
         return result;
     }
+    @Override
+    public int hashCode(){
+        return Objects.hash(w,v);
+    }
+    @Override
+    public String toString() {                // override for used variables
+        return "Finder[" +
+                "w=" + w + ", " +
+                "v=" + v + ']';
+    }
+
 }
