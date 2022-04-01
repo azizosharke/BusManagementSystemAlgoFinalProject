@@ -17,4 +17,5 @@ public class Main {
         System.out.println("PRESS [3] TO SEARCH FOR THE ARRIVAL TIME FOR THE BUS AT THE STATION");
 
     }
+
 }
