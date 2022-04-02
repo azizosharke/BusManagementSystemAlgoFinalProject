@@ -5,8 +5,7 @@ public class SearchImpl extends Search {  // inheritance from class search to ov
 
     @Override
     public String toString() {
-        var toString = super.toString();
-        return toString;
+        return super.toString();
     }
 
     @Override
