@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
+
+// https://algs4.cs.princeton.edu/52trie/TST.java.html by Sedgwick and Wayne
+
 public class TernarySearchTree {
     private Node<String> root;
     private final HashMap<String, String> map = new HashMap<>();
@@ -49,8 +52,9 @@ public class TernarySearchTree {
     public boolean findKey(String key) throws IllegalArgumentException {   //if the key is in the table
         if (key != null) {
             return get(key) != null;
+        } else {
+            throw new IllegalArgumentException("NULL");
         }
-        throw new IllegalArgumentException("NULL");
     }
     public String get(String k) throws IllegalArgumentException {          // if there is a key that matches a string
         if (k != null) {                   // this function should return the string and null if not as
@@ -120,6 +124,19 @@ public class TernarySearchTree {
         stopList.add("TRY AGAIN !! \n");
         return stopList;
     }
+
+//    private void contain(Node i, StringBuilder pre, Queue<String> q) {
+//        if (i != null) {
+//            contain(i.l, pre, q);
+//            if (i.val == null) {
+//            } else {
+//                q.enqueue(pre.toString() + i);
+//            }
+//            contain(i.m, pre.append(i), q);
+//            contain.deleteCharAt(pre.length() - 1);
+//            contain(i.r, pre, q);
+//        }
+//    }
     public TernarySearchTree(String file) {
         File f = new File(file);
         Scanner scanner;
@@ -146,7 +163,6 @@ public class TernarySearchTree {
                             builder.delete(0, 3);
                             builder.append(" ").append(dir);
                         }
-                        default -> throw new IllegalStateException("Unexpected value: " + builder.substring(0, 2));
                     }
                 } else {
                     var sc = builder.substring(0, 11);
@@ -169,4 +185,24 @@ public class TernarySearchTree {
     }
 }
 
+
+// do {
+//         var wholeLine = scanner.nextLine();
+//         var array = wholeLine.split(",");
+//         var stopStationID = array[0];
+//         var builder = new StringBuilder();
+//         builder.append(array[2]);
+//         if (!builder.substring(0, 8).equals("fs")) {
+//         switch (builder.substring(0, 2)) {
+//         case "nb", "sb", "wb", "eb" -> {
+//         var dir = builder.substring(0, 2);
+//         builder.delete(0, 3);
+//         builder.append(" ").append(dir);
+//         }
+//         }
+//         } else {
+//         var sc = builder.substring(0, 11);
+//         builder.delete(0, 12);
+//         builder.append(" ").append(sc);
+//         }
 // finished TST by looking at the slides and Youtube
