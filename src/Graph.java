@@ -1,13 +1,12 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import static java.lang.Double.parseDouble;
-
+import static java.util.Collections.reverse;
 //https://algs4.cs.princeton.edu/44sp/DijkstraSP.java.html
 // by Sedgewick and Wayne
-
-
 public class Graph {
     public ArrayList<Double> w;
     public Double c;
@@ -15,7 +14,6 @@ public class Graph {
     public ArrayList<String[]> busStops;
     public ArrayList<String> firstStop;
     public ArrayList<String> lastStops;
-    public ArrayList<Finder> edge = new ArrayList<>();
     public Graph() {
         return;
     }
@@ -56,18 +54,18 @@ public class Graph {
                 }
             } while (scannerB.hasNextLine());
         }
-//        scannerB.close();
-//        firstStop = street;
-//        lastStops = streets;
-//        w = root;
-//        int n = 1;
-//        while (n < street.size()) {
-//            var intersectionA = searchMap.get(firstStop.get(n));
-//            var intersectionB = searchMap.get(lastStops.get(n));
-//            var edgeWeight = root.get(n);
-//            intersectionA.searchFinder(new Finder(edgeWeight,intersectionB));
-//            searchMap.put(firstStop.get(n), intersectionA);
-//            n += 1;
+        scannerB.close();
+        firstStop = street;
+        lastStops = streets;
+        w = root;
+        int n = 1;
+        while (n < street.size()) {
+            var intersectionA = searchMap.get(firstStop.get(n));
+            var intersectionB = searchMap.get(lastStops.get(n));
+            var edgeWeight = root.get(n);
+            intersectionA.searchFinder(new Finder(edgeWeight,intersectionB));
+            searchMap.put(firstStop.get(n), intersectionA);
+            n += 1;
         }
         File stopFileTimes = new File(stops);
         Scanner scannerC = new Scanner(stopFileTimes);
@@ -86,33 +84,61 @@ public class Graph {
                 busStops.add(arrayB);
             } while (scannerC.hasNextLine());
         }
-//        String Trip;
-//        Trip = busStops.get(1)[0];
-//        String Stop;
-//        Stop = busStops.get(1)[1];
-//        Search a = searchMap.get(Stop);
-//        int m = 2;
-//        while (m < busStops.size()) {
-//            String TripB = busStops.get(m)[0];
-//            String StopB = busStops.get(m)[1];
-//            if (!Trip.equals(TripB)) {
-//                Trip =TripB;
-//                a = searchMap.get(StopB);
-//            } else {
-//                Search b = searchMap.get(StopB);
-//                a.searchFinder(new Finder(1.0,b));
-//
-//                searchMap.put(a.n, a);
-//                a = b;
-//            }
-//            m+= 1;
+        String Trip;
+        Trip = busStops.get(1)[0];
+        String Stop;
+        Stop = busStops.get(1)[1];
+        Search a = searchMap.get(Stop);
+        int m = 2;
+        while (m < busStops.size()) {
+            String TripB = busStops.get(m)[0];
+            String StopB = busStops.get(m)[1];
+            if (!Trip.equals(TripB)) {
+                Trip =TripB;
+                a = searchMap.get(StopB);
+            } else {
+                Search b = searchMap.get(StopB);
+                a.searchFinder(new Finder(1.0,b));
+
+                searchMap.put(a.n, a);
+                a = b;
+            }
+            m+= 1;
         }
     }
-
-
-
-
-
+    public List<Search> shortestPath(Search targetVertex) {
+        List<Search> v;
+        c = targetVertex.getSP();
+        v = Stream.iterate(targetVertex, Objects::nonNull, Search::getDistance).collect(Collectors.toList());
+        reverse(v);
+        return v;
+    }
+    public void pathCalculator(Search vertexUsed) {
+        vertexUsed.setSP(0);
+        PriorityQueue<Search> priorityQueue;
+        priorityQueue = new PriorityQueue<>();
+        priorityQueue.add(vertexUsed);
+        if (priorityQueue.isEmpty()) {
+            return;
+        }
+        do {
+            Search vertex = priorityQueue.poll();
+            List<Finder> vertexPath = vertex.getPath();
+            for (int k = 0; k < vertexPath.size(); k++) {
+                Finder distanceEdge = vertexPath.get(k);
+                Search path = distanceEdge.searchV();
+                var i = distanceEdge.weightFinder();
+                var j = vertex.getSP() + i;
+                if (!(j < path.getSP())) {
+                } else {
+                    priorityQueue.remove(vertex);
+                    path.setDistance(vertex);
+                    path.setSP(j);
+                    priorityQueue.add(path);
+                }
+            }
+        } while (!priorityQueue.isEmpty());
+    }
 }
 
 
