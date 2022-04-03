@@ -1,3 +1,4 @@
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
@@ -6,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-// https://algs4.cs.princeton.edu/52trie/TST.java.html by Sedgwick and Wayne
+// https://algs4.cs.princeton.edu/52trie/TST.java.html by Sedgewick and Wayne
 
 public class TernarySearchTree {
     private Node<String> root;
@@ -18,8 +19,9 @@ public class TernarySearchTree {
         private Node<String> r;
         private String string;
     }
-    public void set(String key, String string) throws IllegalArgumentException {          //if the system found the key in the table , it will
-        if (key == null) {                                                               // automatically delete the key
+    //if the system found the key in the table , it will  automatically delete the key
+    public void set(String key, String string) throws IllegalArgumentException {
+        if (key == null) {
             throw new IllegalArgumentException("NULL");
         }
         if (!findKey(key)) ;
@@ -28,6 +30,7 @@ public class TernarySearchTree {
 
         root = set(root, key, string, 0);
     }
+    // each letter in a key will be added into a tree then it will be associated with a letter
     private Node<String> set(Node<String> node, String k, String string, int g) {
         char a = k.charAt(g);
         if (node != null) {
@@ -49,16 +52,19 @@ public class TernarySearchTree {
         }
         return node;
     }
-    public boolean findKey(String key) throws IllegalArgumentException {   //if the key is in the table
+    //if the key is in the table
+    public boolean findKey(String key) throws IllegalArgumentException {
         if (key != null) {
             return get(key) != null;
         } else {
             throw new IllegalArgumentException("NULL");
         }
     }
-    public String get(String k) throws IllegalArgumentException {          // if there is a key that matches a string
-        if (k != null) {                   // this function should return the string and null if not as
-            if (k.length() == 0)           // I threw an exception
+    // if there is a key that matches a string this function should return the string and null if not as
+    //I threw an exception
+    public String get(String k) throws IllegalArgumentException {
+        if (k != null) {
+            if (k.length() == 0)
                 throw new IllegalArgumentException(" MUST BE  >= 1 !!");
             Node<String> node = get(root, k, 0);
             return node == null ? null : node.string;
@@ -66,6 +72,7 @@ public class TernarySearchTree {
             throw new IllegalArgumentException("NULL");
         }
     }
+    // to return the subtire of the  corresponding key
     private Node<String> get(Node<String> node, String k, int g) throws IllegalArgumentException {
         if (node != null) {
             if (k.length() != 0) {
@@ -87,6 +94,7 @@ public class TernarySearchTree {
             return null;
         }
     }
+    // gathering keys that matches the letters to be returned later
     private void gather(Node<String> node, StringBuilder pre, Queue<String> stack) {
         if (node != null) {
             gather(node.l, pre, stack);
@@ -99,7 +107,7 @@ public class TernarySearchTree {
             gather(node.r, pre, stack);
         }
     }
-    public Iterable<String> mainKeys(String pre) throws IllegalArgumentException {
+    public Iterable<String> mainKeys(String pre) throws IllegalArgumentException { // keys will be returned
         if (pre != null) {
             Queue<String> stack = new LinkedList<>();
             Node<String> node = get(root, pre, 0);
@@ -121,23 +129,24 @@ public class TernarySearchTree {
         if (!stopList.isEmpty()) {
             return stopList;
         }
-        stopList.add("TRY AGAIN !! \n");
+        stopList.add("NO BUS STOP IS RECOGNIZED. PLEASE TRY AGAIN  \n");
         return stopList;
     }
-
-//    private void contain(Node i, StringBuilder pre, Queue<String> q) {
-//        if (i != null) {
-//            contain(i.l, pre, q);
-//            if (i.val == null) {
-//            } else {
-//                q.enqueue(pre.toString() + i);
-//            }
-//            contain(i.m, pre.append(i), q);
-//            contain.deleteCharAt(pre.length() - 1);
-//            contain(i.r, pre, q);
-//        }
-//    }
-    public TernarySearchTree(String file) {
+/*
+    private void contain(Node i, StringBuilder pre, Queue<String> q) {
+        if (i != null) {
+            contain(i.l, pre, q);
+            if (i.val == null) {
+            } else {
+                q.enqueue(pre.toString() + i);
+            }
+            contain(i.m, pre.append(i), q);
+            contain.deleteCharAt(pre.length() - 1);
+            contain(i.r, pre, q);
+        }
+    }
+*/
+public TernarySearchTree(String file) {
         File f = new File(file);
         Scanner scanner;
         scanner = null;
@@ -148,6 +157,28 @@ public class TernarySearchTree {
         }
         assert scanner != null;
         scanner.nextLine();
+
+        /*
+ do {
+         var wholeLine = scanner.nextLine();
+         var array = wholeLine.split(",");
+         var stopStationID = array[0];
+         var builder = new StringBuilder();
+         builder.append(array[2]);
+         if (!builder.substring(0, 8).equals("fs")) {
+         switch (builder.substring(0, 2)) {
+         case "nb", "sb", "wb", "eb" -> {
+         var dir = builder.substring(0, 2);
+         builder.delete(0, 3);
+         builder.append(" ").append(dir);
+         }
+         }
+         } else {
+         var sc = builder.substring(0, 11);
+         builder.delete(0, 12);
+         builder.append(" ").append(sc);
+         }
+*/
 
         if (scanner.hasNextLine()) {
             do {
@@ -171,14 +202,13 @@ public class TernarySearchTree {
                 }
                 var nameOfStop = builder.toString();
                 this.set(nameOfStop, stopStationID);
-                var stopInformation = " ID: " + stopStationID + "\n" +
-                        "CODE : " + array[1] + " |" +
-                        "NAME : " + nameOfStop + " |" +
-                        "DESCRIPTION : " + array[3] + "\n" +
-                        "LATITUDE  : " + array[4] + " |" +
-                        "LONGITUDE  : " + array[5] + " |" +
-                        "ZONE : " + array[6] + " |" +
-                        " LOCATION TYPE : " + array[8] + "\n -------------------------";
+                var stopInformation = MessageFormat.format(" ID: {0}\nCODE : {1} | NAME : {2}  " +
+                                                           "| DESCRIPTION : {3}\n LATITUDE  : {4} | LONGITUDE  : {5}" +
+                                                           " | ZONE : {6} | LOCATION TYPE : {7}\n  " +
+                                                           "-----------------------------------------" +
+                                                           "------------------------------------------------------" +
+                                                           "------------------------------ ",
+                        stopStationID, array[1], nameOfStop, array[3], array[4], array[5], array[6], array[8]);
                 map.put(stopStationID, stopInformation);
             } while (scanner.hasNextLine());
         }
@@ -186,23 +216,5 @@ public class TernarySearchTree {
 }
 
 
-// do {
-//         var wholeLine = scanner.nextLine();
-//         var array = wholeLine.split(",");
-//         var stopStationID = array[0];
-//         var builder = new StringBuilder();
-//         builder.append(array[2]);
-//         if (!builder.substring(0, 8).equals("fs")) {
-//         switch (builder.substring(0, 2)) {
-//         case "nb", "sb", "wb", "eb" -> {
-//         var dir = builder.substring(0, 2);
-//         builder.delete(0, 3);
-//         builder.append(" ").append(dir);
-//         }
-//         }
-//         } else {
-//         var sc = builder.substring(0, 11);
-//         builder.delete(0, 12);
-//         builder.append(" ").append(sc);
-//         }
+
 // finished TST by looking at the slides and Youtube
