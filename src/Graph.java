@@ -2,19 +2,41 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import static java.lang.Double.parseDouble;
 import static java.util.Collections.reverse;
+
 //https://algs4.cs.princeton.edu/44sp/DijkstraSP.java.html
-// by Sedgewick and Wayne
-public class Graph {
+ // by Sedgewick and Wayne
+    public DijkstraSP(ewd F, int e) {
+        distanceTo = new double[F.V()];
+        edgeTo = new DirectedEdge[F.V()];
+        IntStream.iterate(0, v -> v < F.V(), v -> v + 1).forEach(v -> distanceTo[v] = Double.POSITIVE_INFINITY);
+        distTo[e] = 0.0;
+
+
+        i = new IndexMinPQ<Double>(G.V());
+        i.insert(s, distTo[s]);
+        if (!i.isEmpty()) {
+            do {
+                int v = i.delMin();
+                for (Edge e : G.adj(v))
+                    relax(e);
+            } while (!i.isEmpty());
+        }
+    }
+
+
+
+/*public class Graph {
     public ArrayList<Double> w;
     public Double c;
     public HashMap<String,Search> searchMap = new HashMap<>();
     public ArrayList<String[]> busStops;
     public ArrayList<String> firstStop;
-    public ArrayList<String> lastStops;
-    public Graph() {
+    public ArrayList<String> lastStops;*/
+  /*  public Graph() {
         return;
     }
     public Graph(String stopDes, String transfers, String stops) throws FileNotFoundException
@@ -106,6 +128,7 @@ public class Graph {
             m+= 1;
         }
     }
+*/
     public List<Search> shortestPath(Search targetVertex) {
         List<Search> v;
         c = targetVertex.getSP();
@@ -139,6 +162,23 @@ public class Graph {
             }
         } while (!priorityQueue.isEmpty());
     }
+/*//    public double distanceTo(int d) {
+//        return distanceTo[d];
+//    }*/
+   /* private void put(Edge edge) {
+        int n = edge.from();
+        int m = edge.to();
+        if (distanceTo[m] <= distanceTo[n] + edge.weight()) {
+            return;
+        }
+        distanceTo[m] = distanceTo[n] + edge.weight();
+        edgeTo[m] = edge;
+        if (!i.contains(m)) {
+            i.insert(m, distanceTo[m]);
+        } else {
+            i.decreaseKey(m, distanceTo[m]);
+        }
+    }*/
 }
 
 
