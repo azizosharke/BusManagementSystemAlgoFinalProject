@@ -1,29 +1,37 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.stream.Stream;
+import static java.nio.file.Files.readAllLines;
+import static java.nio.file.Paths.*;
+import static java.util.Collections.*;
+import static java.util.Collections.sort;
 // used generated regex to generate the numbers I needed for the times in format of (HH:MM:SS)
+//   https://regexr.com/
+//   https://stackoverflow.com/questions/4736/learning-regular-expressions
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         File busSystem = new File("stop_times.txt");
         Graph dijkstra = new Graph("stops.txt", "transfers.txt", "stop_times.txt");
         System.out.println("""
                 ***********************************************************\s
-                 WELCOME TO VANCOUVER BUS SYSTEM DATA  \s
+                 WELCOME TO VANCOUVER BUS SYSTEM DATA ☺ \s
                 ***********************************************************""");
         while (true) {
             TernarySearchTree Q2 = new TernarySearchTree("stops.txt");
             Scanner input = new Scanner(System.in);
             System.out.println("""
                     ***********************************************************\s
-                     PLEASE SELECT ONE OF THE FOLLOWING OPTIONS : (0,1,2,3)\s
+                     PLEASE SELECT ONE OF THE FOLLOWING OPTIONS BELOW ↓\s
                     ***********************************************************
                     """);
-
-            Arrays.asList("PRESS [0] TO EXIST THE PROGRAM", "PRESS [1]TO FIND THE SHORTEST PATHS BETWEEN TWO BUS STOPS", "PRESS [2] TO SEARCH FOR THE REQUIRED BUS STOP", "PRESS [3] TO SEARCH FOR THE ARRIVAL TIME FOR THE BUS AT THE STATION").forEach(System.out::println);
+            Arrays.asList("PRESS [0] TO EXIST THE PROGRAM", "PRESS [1]  FIND THE SHORTEST PATHS BETWEEN TWO BUS STOPS",
+                    "PRESS [2]  SEARCH FOR THE REQUIRED BUS STOP",
+                    "PRESS [3]  SEARCH FOR THE ARRIVAL TIME FOR THE BUS AT THE STATION").forEach(System.out::println);
             if (!input.hasNextInt()) {
                 System.out.println("""
                 ***********************************************************\s
@@ -39,7 +47,7 @@ public class Main {
                             case 0 -> {
                                 System.out.println("""
                 ***********************************************************\s
-                 BYE. HOPE YOU HAVE A LOVELY DAY  \s
+                 BYE. HOPE YOU HAVE A LOVELY DAY ☺ \s
                 ***********************************************************""");
                                 System.exit(0);
                             }
@@ -59,6 +67,7 @@ public class Main {
                                         start = input.nextLine();
                                         System.out.println("PLEASE ENTER THE NUMBER OF THE  DESTINATION STOP:");
                                         stop = input.nextLine();
+
                                         if (!start.matches(numbers) || !stop.matches(numbers)) {
                                             System.out.println("""
                 ***********************************************************\s
@@ -81,7 +90,8 @@ public class Main {
                                 Search answer = hashMap.get(start);
                                 Search arrival = hashMap.get(stop);
                                 dijkstra.pathCalculator(answer);
-                                System.out.println(MessageFormat.format("THE OVERALL PATH FROM  {0} TO {1} IS {2}", answer, arrival, dijkstra.shortestPath(arrival)));
+                                System.out.println(MessageFormat.format("THE OVERALL PATH FROM  {0} TO {1} IS {2}"
+                                        , answer, arrival, dijkstra.shortestPath(arrival)));
 
                                 System.out.println(" [THE OVERALL COST OF THE PATH IS] --> " + dijkstra.c + "\n");
                             }
@@ -89,7 +99,7 @@ public class Main {
                                 System.out.print(
                                         "PLEASE ENTER THE STOP YOU ARE LOOKING FOR OR SOME LETTERS OF THR STOP : ");
                                 String userInput = input.nextLine();
-                                for (String information : Q2.busStopInfo(userInput)) {
+                                for (String information : Q2.busStopInfo(userInput.toUpperCase(Locale.ROOT))) {
                                     System.out.println(information);
                                 }
                             }
@@ -104,5 +114,115 @@ public class Main {
         }
     }
 }
+class BusManagement {
+    public static void Bus (File f) throws IOException {
+        try {
+            var busTime = FileReader(f);
+            ArrayList<String> results;
+            results = new ArrayList<>();
+            var input = new Scanner(System.in);
+            System.out.println("ENTER THE TIME IN [****(HH:MM:SS)****] ");
+            var times = false;
+            try {
+                String busStop = input.next();
+                if (!busStop.matches("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) {
+                    System.out.println((busStop.charAt(2) == ':') && (busStop.charAt(5) == ':')
+                                       && ((int) busStop.charAt(1) >= 4) ?
+                            "PLEASE TRY AGAIN AS YOUR INPUT EXCEEDS [23:59:59]!! " : "PLEASE TRY AGAIN AS YOUR INPUT IS " +
+                                                                                     "NOT IN THE FORMAT [****(HH:MM:SS)****]!! ");
+                } else {
+                    switch (busStop.length()) {
+                        case 7 -> busStop += " ";
+                    }
+                    for (String s : busTime) {
+                        if (!s.contains(busStop)) {
+                        } else {
+                            results.add(s);
+                        }
+                        times = true;
+                    }
+                }
+            } catch (Exception i) {
+                System.out.println("INVALID! PLEASE TRY AGAIN.");
+            }
+            if (results.size() <= 0) {
+                if(times) {
+                    System.out.println("ARRIVAL TIME ENTERED CAN NOT BE FOUND  " );
+                }
+            } else {
+                BusArrival(results);
+            }
+
+        } catch (FileNotFoundException i) {
+            System.out.println("SYSTEM CAN NOT FIND THE FILE, PLEASE DO NOT FORGET TO INPUT THE FILE ");
+        }
+    }
+    //    public static List<stopTime> search(StopTimeBST<Time, stopTime> Times, String aTime)
+//    {
+//        List<stopTime> listOfTripIds;
+//        try {
+//            listOfTripIds = stopTimes.get(lTime.parse(aTime));
+//            listOfTripIds.forEach(listOfTripId -> listOfTripId.print());
+//        } catch(NullPointerException N) {
+//            System.out.print("INVALID");
+//            return null;
+//        }
+//        return listOfTripIds;
+//    }
+//    static List<stopTime> quickSort (List<stopTime> stopTime){
+//
+//        quickSort(stopTime, 0, stopTime.size() -1 );
+//        return stopTime;
+//    }
+    public static void BusArrival (ArrayList<String> fileList) {
+        sort(fileList);
+        System.out.println(
+                "(|Trip ID|Arrival Time|Departure Time|Stop ID|Stop sequence|Stop Headsign" +
+                "|Pick Up Type|Drop Off Type|Shape|Distance Traveled|)");
+
+        int j = 0, listSize = fileList.size();
+        while (j < listSize) {
+            String l = fileList.get(j);
+            System.out.println(l);
+            j++;
+        }
+    }
+    public static ArrayList<String> FileReader (File file) throws IOException {
+        ArrayList<String> fileName;
+        fileName = (ArrayList<String>) readAllLines(get("stop_times.txt"));
+        try
+                (var stringStream =
+                         Files.lines(file.toPath()).map(String::trim).filter(s -> !
+                                 "(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]".matches(s))) {
+        }
+        return fileName;
+    }
+//    static void quickSort(List<stopTime> stopTime, int b, int e) {
+//        if (b >= e) {
+//            return;
+//        }
+//        var partitionIndex = partition(stopTime, b, e);
+//        quickSort(stopTime, b, partitionIndex-1);
+//        quickSort(stopTime, partitionIndex+1, e);
+//    }
+
+//    static int partition(List<stopTime> stopTime, int be, int e) {
+//        stopTime pivot = stopTime.get(end);
+//        int m = (b-1);
+//
+//        int j = b;
+//        while (j < e) {
+//            if (stopTime.get(j).gId() > pivot.gId()) {
+//            } else {
+//                m++;
+//                swap(stopTime, m, j);
+//            }
+//            j++;
+//        }
+//        swap(stopTime, m+1, e);
+//        return m+1;
+//    }
+}
+
 
 
