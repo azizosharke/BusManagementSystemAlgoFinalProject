@@ -115,70 +115,11 @@ public class Main {
     }
 }
 class BusManagement {
-    public static void Bus (File f) throws IOException {
-        try {
-            var busTime = FileReader(f);
-            ArrayList<String> results;
-            results = new ArrayList<>();
-            var input = new Scanner(System.in);
-            System.out.println("ENTER THE TIME IN [****(HH:MM:SS)****] ");
-            var times = false;
-            try {
-                String busStop = input.next();
-                if (!busStop.matches("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) {
-                    System.out.println((busStop.charAt(2) == ':') && (busStop.charAt(5) == ':')
-                                       && ((int) busStop.charAt(1) >= 4) ?
-                            "PLEASE TRY AGAIN AS YOUR INPUT EXCEEDS [23:59:59]!! " : "PLEASE TRY AGAIN AS YOUR INPUT IS " +
-                                                                                     "NOT IN THE FORMAT [****(HH:MM:SS)****]!! ");
-                } else {
-                    switch (busStop.length()) {
-                        case 7 -> busStop += " ";
-                    }
-                    for (String s : busTime) {
-                        if (!s.contains(busStop)) {
-                        } else {
-                            results.add(s);
-                        }
-                        times = true;
-                    }
-                }
-            } catch (Exception i) {
-                System.out.println("INVALID! PLEASE TRY AGAIN.");
-            }
-            if (results.size() <= 0) {
-                if(times) {
-                    System.out.println("ARRIVAL TIME ENTERED CAN NOT BE FOUND  " );
-                }
-            } else {
-                BusArrival(results);
-            }
-
-        } catch (FileNotFoundException i) {
-            System.out.println("SYSTEM CAN NOT FIND THE FILE, PLEASE DO NOT FORGET TO INPUT THE FILE ");
-        }
-    }
-    //    public static List<stopTime> search(StopTimeBST<Time, stopTime> Times, String aTime)
-//    {
-//        List<stopTime> listOfTripIds;
-//        try {
-//            listOfTripIds = stopTimes.get(lTime.parse(aTime));
-//            listOfTripIds.forEach(listOfTripId -> listOfTripId.print());
-//        } catch(NullPointerException N) {
-//            System.out.print("INVALID");
-//            return null;
-//        }
-//        return listOfTripIds;
-//    }
-//    static List<stopTime> quickSort (List<stopTime> stopTime){
-//
-//        quickSort(stopTime, 0, stopTime.size() -1 );
-//        return stopTime;
-//    }
     public static void BusArrival (ArrayList<String> fileList) {
         sort(fileList);
         System.out.println(
                 "(|Trip ID|Arrival Time|Departure Time|Stop ID|Stop sequence|Stop Headsign" +
-                "|Pick Up Type|Drop Off Type|Shape|Distance Traveled|)");
+                        "|Pick Up Type|Drop Off Type|Shape|Distance Traveled|)");
 
         int j = 0, listSize = fileList.size();
         while (j < listSize) {
@@ -192,36 +133,58 @@ class BusManagement {
         fileName = (ArrayList<String>) readAllLines(get("stop_times.txt"));
         try
                 (var stringStream =
-                         Files.lines(file.toPath()).map(String::trim).filter(s -> !
-                                 "(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]".matches(s))) {
+                         Files.lines(file.toPath()).map(String::trim).filter(s -> {
+                             return !
+                                     "(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]".matches(s);
+                         })) {
         }
         return fileName;
     }
-//    static void quickSort(List<stopTime> stopTime, int b, int e) {
-//        if (b >= e) {
-//            return;
-//        }
-//        var partitionIndex = partition(stopTime, b, e);
-//        quickSort(stopTime, b, partitionIndex-1);
-//        quickSort(stopTime, partitionIndex+1, e);
-//    }
 
-//    static int partition(List<stopTime> stopTime, int be, int e) {
-//        stopTime pivot = stopTime.get(end);
-//        int m = (b-1);
-//
-//        int j = b;
-//        while (j < e) {
-//            if (stopTime.get(j).gId() > pivot.gId()) {
-//            } else {
-//                m++;
-//                swap(stopTime, m, j);
-//            }
-//            j++;
-//        }
-//        swap(stopTime, m+1, e);
-//        return m+1;
-//    }
+
+    public static List<stopTime> search(StopTimeBST<Time, stopTime> Times, String aTime)
+    {
+        List<stopTime> listOfTripIds;
+        try {
+            listOfTripIds = stopTimes.get(lTime.parse(aTime));
+            listOfTripIds.forEach(listOfTripId -> listOfTripId.print());
+        } catch(NullPointerException N) {
+            System.out.print("INVALID");
+            return null;
+        }
+        return listOfTripIds;
+    }
+    static List<stopTime> quickSort (List<stopTime> stopTime){
+
+        quickSort(stopTime, 0, stopTime.size() -1 );
+        return stopTime;
+    }
+    static void quickSort(List<stopTime> stopTime, int b, int e) {
+        if (b >= e) {
+            return;
+        }
+        var partitionIndex = partition(stopTime, b, e);
+        quickSort(stopTime, b, partitionIndex-1);
+        quickSort(stopTime, partitionIndex+1, e);
+    }
+    static int partition(List<stopTime> stopTime, int be, int e) {
+        stopTime pivot = stopTime.get(end);
+        int m = (b-1);
+
+        int j = b;
+        while (j < e) {
+            if (stopTime.get(j).gId() > pivot.gId()) {
+            } else {
+                m++;
+                swap(stopTime, m, j);
+            }
+            j++;
+        }
+        swap(stopTime, m+1, e);
+        return m+1;
+    }
+
+
 }
 
 
