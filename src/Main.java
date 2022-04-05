@@ -128,20 +128,61 @@ class BusManagement {
             j++;
         }
     }
-    public static ArrayList<String> FileReader (File file) throws IOException {
+    public static ArrayList<String> FileReader (File f) throws IOException {
         ArrayList<String> fileName;
         fileName = (ArrayList<String>) readAllLines(get("stop_times.txt"));
         try
                 (var stringStream =
-                         Files.lines(file.toPath()).map(String::trim).filter(s -> {
+                         Files.lines(f.toPath()).map(String::trim).filter(s -> {
                              return !
                                      "(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]".matches(s);
                          })) {
         }
         return fileName;
     }
+    public static void Bus (File f) throws IOException {
+        try {
+            var busTime = FileReader(f);
+            ArrayList<String> results;
+            results = new ArrayList<>();
+            var input = new Scanner(System.in);
+            System.out.println("ENTER THE TIME IN [****(HH:MM:SS)****] ");
+            var times = false;
+            try {
+                String busStop = input.next();
+                if (!busStop.matches("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) {
+                    System.out.println((busStop.charAt(2) == ':') && (busStop.charAt(5) == ':')
+                                       && ((int) busStop.charAt(1) >= 4) ?
+                            "PLEASE TRY AGAIN AS YOUR INPUT EXCEEDS [23:59:59]!! " : "PLEASE TRY AGAIN AS YOUR INPUT IS " +
+                                                                                     "NOT IN THE FORMAT [****(HH:MM:SS)****]!! ");
+                } else {
+                    switch (busStop.length()) {
+                        case 7 -> busStop += " ";
+                    }
+                    for (String s : busTime) {
+                        if (!s.contains(busStop)) {
+                        } else {
+                            results.add(s);
+                        }
+                        times = true;
+                    }
+                }
+            } catch (Exception i) {
+                System.out.println("INVALID! PLEASE TRY AGAIN.");
+            }
+            if (results.size() <= 0) {
+                if(times) {
+                    System.out.println("ARRIVAL TIME ENTERED CAN NOT BE FOUND  " );
+                }
+            } else {
+                BusArrival(results);
+            }
 
-
+        } catch (FileNotFoundException i) {
+            System.out.println("SYSTEM CAN NOT FIND THE FILE, PLEASE DO NOT FORGET TO INPUT THE FILE ");
+        }
+    }
+    /*
     public static List<stopTime> search(StopTimeBST<Time, stopTime> Times, String aTime)
     {
         List<stopTime> listOfTripIds;
@@ -183,7 +224,7 @@ class BusManagement {
         swap(stopTime, m+1, e);
         return m+1;
     }
-
+*/
 
 }
 
