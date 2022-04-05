@@ -6,10 +6,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import static java.lang.Double.parseDouble;
 import static java.util.Collections.reverse;
-
 //https://algs4.cs.princeton.edu/44sp/DijkstraSP.java.html
 // by Sedgewick and Wayne
-
 //    public DijkstraSP(ewd F, int e) {
 //        distanceTo = new double[F.V()];
 //        edgeTo = new DirectedEdge[F.V()];
@@ -36,23 +34,23 @@ public class Graph {
     public ArrayList<String> lastStops;
     public Graph() {
         return;
-
     }
+/*
     public double distTo(int v) {
         validateVertex(v);
-        return distTo[v];
-    }
+       return distTo[v];
+   }
 
     private void relax(DirectedEdge e) {
         int v = e.from(), w = e.to();
         if (distTo[w] > distTo[v] + e.weight()) {
             distTo[w] = distTo[v] + e.weight();
-            edgeTo[w] = e;
+           edgeTo[w] = e;
             if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-            else                pq.insert(w, distTo[w]);
+           else                pq.insert(w, distTo[w]);
         }
     }
-
+*/
     public Graph(String stopDes, String transfers, String stops) throws FileNotFoundException
     {
         File file = new File(stopDes);
