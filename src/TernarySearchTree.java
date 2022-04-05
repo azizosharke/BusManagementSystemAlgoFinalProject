@@ -179,30 +179,34 @@ public TernarySearchTree(String file) {
          builder.append(" ").append(sc);
          }
 */
-
         if (scanner.hasNextLine()) {
             do {
                 var wholeLine = scanner.nextLine();
                 var array = wholeLine.split(",");
                 var stopStationID = array[0];
-                var builder = new StringBuilder();
+                StringBuilder builder;
+                builder = new StringBuilder();
                 builder.append(array[2]);
-                if (!builder.substring(0, 8).equals("fs")) {
-                    switch (builder.substring(0, 2)) {
-                        case "nb", "sb", "wb", "eb" -> {
-                            var dir = builder.substring(0, 2);
-                            builder.delete(0, 3);
-                            builder.append(" ").append(dir);
+                switch (builder.substring(0, 8)) {
+                    case "FS":
+                        var sc = builder.substring(0, 11);
+                        builder.delete(0, 12);
+                        builder.append(" ").append(sc);
+                        break;
+                    default:
+                        switch (builder.substring(0, 2)) {
+                            case "NB", "SB", "WB", "EB" -> {
+                                var dir = builder.substring(0, 2);
+                                builder.delete(0, 3);
+                                builder.append(" ").append(dir);
+                            }
                         }
-                    }
-                } else {
-                    var sc = builder.substring(0, 11);
-                    builder.delete(0, 12);
-                    builder.append(" ").append(sc);
+                        break;
                 }
-                var nameOfStop = builder.toString();
+                String nameOfStop;
+                nameOfStop = builder.toString();
                 this.set(nameOfStop, stopStationID);
-                var stopInformation = MessageFormat.format(" ID: {0}\nCODE : {1} | NAME : {2}  " +
+                var stopInformation = MessageFormat.format(" ID: {0} CODE : {1} | NAME : {2}  " +
                                                            "| DESCRIPTION : {3}\n LATITUDE  : {4} | LONGITUDE  : {5}" +
                                                            " | ZONE : {6} | LOCATION TYPE : {7}\n  " +
                                                            "-----------------------------------------" +
@@ -217,4 +221,3 @@ public TernarySearchTree(String file) {
 
 
 
-// finished TST by looking at the slides and Youtube
