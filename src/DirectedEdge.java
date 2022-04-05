@@ -15,7 +15,6 @@ public record DirectedEdge(int v, int w, double weight) {
     public int from() {
         return v;
     }
-
     /**
      * Returns the head vertex of the directed edge.
      *
@@ -24,7 +23,6 @@ public record DirectedEdge(int v, int w, double weight) {
     public int to() {
         return w;
     }
-
     /**
      * Returns the weight of the directed edge.
      *
@@ -35,8 +33,5 @@ public record DirectedEdge(int v, int w, double weight) {
         return weight;
     }
 }
-
-
-
 //Copyright © 2000–2019, Robert Sedgewick and Kevin Wayne.
        // Last updated: Wed Jan 20 05:27:29 EST 2021.
