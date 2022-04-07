@@ -8,23 +8,6 @@ import static java.lang.Double.parseDouble;
 import static java.util.Collections.reverse;
 //https://algs4.cs.princeton.edu/44sp/DijkstraSP.java.html
 // by Sedgewick and Wayne
-//    public DijkstraSP(ewd F, int e) {
-//        distanceTo = new double[F.V()];
-//        edgeTo = new DirectedEdge[F.V()];
-//        IntStream.iterate(0, v -> v < F.V(), v -> v + 1).forEach(v -> distanceTo[v] = Double.POSITIVE_INFINITY);
-//        distTo[e] = 0.0;
-//
-//
-//        i = new IndexMinPQ<Double>(G.V());
-//        i.insert(s, distTo[s]);
-//        if (!i.isEmpty()) {
-//            do {
-//                int v = i.delMin();
-//                for (Edge e : G.adj(v))
-//                    relax(e);
-//            } while (!i.isEmpty());
-//        }
-//    }
 public class Graph {
     public ArrayList<Double> w;
     public Double c;
@@ -35,22 +18,6 @@ public class Graph {
     public Graph() {
         return;
     }
-/*
-    public double distTo(int v) {
-        validateVertex(v);
-       return distTo[v];
-   }
-
-    private void relax(DirectedEdge e) {
-        int v = e.from(), w = e.to();
-        if (distTo[w] > distTo[v] + e.weight()) {
-            distTo[w] = distTo[v] + e.weight();
-           edgeTo[w] = e;
-            if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-           else                pq.insert(w, distTo[w]);
-        }
-    }
-*/
     public Graph(String stopDes, String transfers, String stops) throws FileNotFoundException
     {
         File file = new File(stopDes);
@@ -173,23 +140,6 @@ public class Graph {
             }
         } while (!priorityQueue.isEmpty());
     }
-/*    public double distanceTo(int d) {
-       return distanceTo[d];
-    }*/
-   /* private void put(Edge edge) {
-        int n = edge.from();
-        int m = edge.to();
-        if (distanceTo[m] <= distanceTo[n] + edge.weight()) {
-            return;
-        }
-        distanceTo[m] = distanceTo[n] + edge.weight();
-        edgeTo[m] = edge;
-        if (!i.contains(m)) {
-            i.insert(m, distanceTo[m]);
-        } else {
-            i.decreaseKey(m, distanceTo[m]);
-        }
-    }*/
 }
 
 
