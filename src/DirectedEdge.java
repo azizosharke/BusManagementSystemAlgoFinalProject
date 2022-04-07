@@ -11,7 +11,6 @@ public record DirectedEdge(int v, int w, double weight) {
         if (w < 0) throw new IllegalArgumentException("Vertex names must be non-negative integers");
         if (Double.isNaN(weight)) throw new IllegalArgumentException("Weight is NaN");
     }
-
     public int from() {
         return v;
     }
