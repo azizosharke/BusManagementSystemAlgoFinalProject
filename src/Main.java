@@ -120,11 +120,11 @@ class BusManagement {
         System.out.println(
                 "(|Trip ID|Arrival Time|Departure Time|Stop ID|Stop sequence|Stop Headsign" +
                         "|Pick Up Type|Drop Off Type|Shape|Distance Traveled|)");
-
         int j = 0, listSize = fileList.size();
         while (j < listSize) {
             String l = fileList.get(j);
             System.out.println(l);
+            System.out.println("-------------------------------------------------");
             j++;
         }
     }
