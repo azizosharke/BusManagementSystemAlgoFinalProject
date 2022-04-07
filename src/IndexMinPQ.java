@@ -34,7 +34,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         for (int i = 0; i <= maxN; i++)
             qp[i] = -1;
     }
-
     /**
      * Returns true if this priority queue is empty.
      *
@@ -44,7 +43,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     public boolean isEmpty() {
         return n == 0;
     }
-
     /**
      * Is {@code i} an index on this priority queue?
      *
@@ -57,7 +55,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         validateIndex(i);
         return qp[i] != -1;
     }
-
     /**
      * Associates key with index {@code i}.
      *
@@ -107,7 +104,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         swim(qp[i]);
         sink(qp[i]);
     }
-
     /**
      * Change the key associated with index {@code i} to the specified value.
      *
@@ -174,10 +170,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
             k = j;
         }
     }
-    /***************************************************************************
-     * Iterators.
-     ***************************************************************************/
-
     /**
      * Returns an iterator that iterates over the keys on the
      * priority queue in ascending order.
@@ -188,7 +180,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     public Iterator<Integer> iterator() {
         return new HeapIterator();
     }
-
     private class HeapIterator implements Iterator<Integer> {
         // create a new pq
         private IndexMinPQ<Key> copy;
@@ -207,41 +198,4 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
             return copy.delMin();
         }
     }
-
-
-    /**
-     * Unit tests the {@code IndexMinPQ} data type.
-     *
-     * @param args the command-line arguments
-     */
-//    public static void main(String[] args) {
-//        // insert a bunch of strings
-//        String[] strings = { "it", "was", "the", "best", "of", "times", "it", "was", "the", "worst" };
-//
-//        IndexMinPQ<String> pq = new IndexMinPQ<String>(strings.length);
-//        for (int i = 0; i < strings.length; i++) {
-//            pq.insert(i, strings[i]);
-//        }
-//
-//        // delete and print each key
-//        while (!pq.isEmpty()) {
-//            int i = pq.delMin();
-//            StdOut.println(i + " " + strings[i]);
-//        }
-//        StdOut.println();
-//
-//        // reinsert the same strings
-//        for (int i = 0; i < strings.length; i++) {
-//            pq.insert(i, strings[i]);
-//        }
-//
-//        // print each key using the iterator
-//        for (int i : pq) {
-//            StdOut.println(i + " " + strings[i]);
-//        }
-//        while (!pq.isEmpty()) {
-//            pq.delMin();
-//        }
-//
-//    }
 }
