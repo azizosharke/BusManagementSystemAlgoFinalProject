@@ -6,9 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 // https://algs4.cs.princeton.edu/52trie/TST.java.html by Sedgewick and Wayne
-
 public class TernarySearchTree {
     private Node<String> root;
     private final HashMap<String, String> map = new HashMap<>();
@@ -132,20 +130,6 @@ public class TernarySearchTree {
         stopList.add("NO BUS STOP IS RECOGNIZED. PLEASE TRY AGAIN  \n");
         return stopList;
     }
-/*
-    private void contain(Node i, StringBuilder pre, Queue<String> q) {
-        if (i != null) {
-            contain(i.l, pre, q);
-            if (i.val == null) {
-            } else {
-                q.enqueue(pre.toString() + i);
-            }
-            contain(i.m, pre.append(i), q);
-            contain.deleteCharAt(pre.length() - 1);
-            contain(i.r, pre, q);
-        }
-    }
-*/
 public TernarySearchTree(String file) {
         File f = new File(file);
         Scanner scanner;
@@ -157,28 +141,6 @@ public TernarySearchTree(String file) {
         }
         assert scanner != null;
         scanner.nextLine();
-
-        /*
- do {
-         var wholeLine = scanner.nextLine();
-         var array = wholeLine.split(",");
-         var stopStationID = array[0];
-         var builder = new StringBuilder();
-         builder.append(array[2]);
-         if (!builder.substring(0, 8).equals("fs")) {
-         switch (builder.substring(0, 2)) {
-         case "nb", "sb", "wb", "eb" -> {
-         var dir = builder.substring(0, 2);
-         builder.delete(0, 3);
-         builder.append(" ").append(dir);
-         }
-         }
-         } else {
-         var sc = builder.substring(0, 11);
-         builder.delete(0, 12);
-         builder.append(" ").append(sc);
-         }
-*/
         if (scanner.hasNextLine()) {
             do {
                 var wholeLine = scanner.nextLine();
