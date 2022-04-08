@@ -59,34 +59,32 @@ public class Main {
                                 HashMap<String, Search> hashMap = dijkstra.searchMap;
                                 boolean system;
                                 system = true;
-                                if (system) {
-                                    do {
-                                        String numbers;
-                                        numbers = "[0-9]+";
-                                        System.out.println("PLEASE ENTER THE NUMBER OF THE STARTING STOP:");
-                                        start = input.nextLine();
-                                        System.out.println("PLEASE ENTER THE NUMBER OF THE  DESTINATION STOP:");
-                                        stop = input.nextLine();
+                                do {
+                                    String numbers;
+                                    numbers = "[0-9]+";
+                                    System.out.println("PLEASE ENTER THE NUMBER OF THE STARTING STOP:");
+                                    start = input.nextLine();
+                                    System.out.println("PLEASE ENTER THE NUMBER OF THE  DESTINATION STOP:");
+                                    stop = input.nextLine();
 
-                                        if (!start.matches(numbers) || !stop.matches(numbers)) {
-                                            System.out.println("""
-                ***********************************************************\s
-                 ONLY DIGITS ARE ALLOWED!! PLEASE TRY AGAIN
-                ***********************************************************""");
-                                        } else {
-                                            if (hashMap.get(start) != null && hashMap.get(stop) != null) {
-                                                system = false;
-                                                {
-                                                }
-                                            } else {
-                                                System.out.println("""
-                ************************************************************************************************\s
-                 PLEASE TRT AGAIN WITH A DIFFERENT STOP NUMBER! THE BUS STOPS ENTERED DO NOT EXIST IN THE SYSTEM.
-                ************************************************************************************************""");
+                                    if (!start.matches(numbers) || !stop.matches(numbers)) {
+                                        System.out.println("""
+            ***********************************************************\s
+             ONLY DIGITS ARE ALLOWED!! PLEASE TRY AGAIN
+            ***********************************************************""");
+                                    } else {
+                                        if (hashMap.get(start) != null && hashMap.get(stop) != null) {
+                                            system = false;
+                                            {
                                             }
+                                        } else {
+                                            System.out.println("""
+            ************************************************************************************************\s
+             PLEASE TRT AGAIN WITH A DIFFERENT STOP NUMBER! THE BUS STOPS ENTERED DO NOT EXIST IN THE SYSTEM.
+            ************************************************************************************************""");
                                         }
-                                    } while (system);
-                                }
+                                    }
+                                } while (system);
                                 Search answer = hashMap.get(start);
                                 Search arrival = hashMap.get(stop);
                                 dijkstra.pathCalculator(answer);

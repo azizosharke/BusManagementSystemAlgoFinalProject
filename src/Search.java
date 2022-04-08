@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import static java.lang.Double.MAX_VALUE;
-
 public class Search implements Comparable<Search> {
     private double shortestPath;
     public String n;
@@ -41,15 +40,12 @@ public class Search implements Comparable<Search> {
     }
 }
  record Finder(double w, Search v) {    // converted into record as it is better for plain data carriers
-
     public double weightFinder() {
         return w;
     }
-
     public Search searchV() {
         return v;
     }
-
     @Override
     public boolean equals(Object obj) {                                    // overriding and checking in the main system
         boolean result;
@@ -64,7 +60,6 @@ public class Search implements Comparable<Search> {
         }
         return result;
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(w, v);
@@ -77,5 +72,4 @@ public class Search implements Comparable<Search> {
                 "v=" + v + ']';
     }
 }
-
 // class Search is finished
