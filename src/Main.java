@@ -180,50 +180,6 @@ class BusManagement {
             System.out.println("SYSTEM CAN NOT FIND THE FILE, PLEASE DO NOT FORGET TO INPUT THE FILE ");
         }
     }
-    /*
-    public static List<stopTime> search(StopTimeBST<Time, stopTime> Times, String aTime)
-    {
-        List<stopTime> listOfTripIds;
-        try {
-            listOfTripIds = stopTimes.get(lTime.parse(aTime));
-            listOfTripIds.forEach(listOfTripId -> listOfTripId.print());
-        } catch(NullPointerException N) {
-            System.out.print("INVALID");
-            return null;
-        }
-        return listOfTripIds;
-    }
-    static List<stopTime> quickSort (List<stopTime> stopTime){
-
-        quickSort(stopTime, 0, stopTime.size() -1 );
-        return stopTime;
-    }
-    static void quickSort(List<stopTime> stopTime, int b, int e) {
-        if (b >= e) {
-            return;
-        }
-        var partitionIndex = partition(stopTime, b, e);
-        quickSort(stopTime, b, partitionIndex-1);
-        quickSort(stopTime, partitionIndex+1, e);
-    }
-    static int partition(List<stopTime> stopTime, int be, int e) {
-        stopTime pivot = stopTime.get(end);
-        int m = (b-1);
-
-        int j = b;
-        while (j < e) {
-            if (stopTime.get(j).gId() > pivot.gId()) {
-            } else {
-                m++;
-                swap(stopTime, m, j);
-            }
-            j++;
-        }
-        swap(stopTime, m+1, e);
-        return m+1;
-    }
-*/
-
 }
 
 
