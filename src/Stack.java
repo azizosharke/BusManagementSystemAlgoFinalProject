@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 public class Stack<Item> implements Iterable<Item> {
     private Node<Item> first;     // top of stack
     private int n;                // size of the stack
-
     // helper linked list class
     private static class Node<Item> {
         private Item item;
