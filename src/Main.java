@@ -10,6 +10,7 @@ import static java.nio.file.Files.readAllLines;
 import static java.nio.file.Paths.*;
 import static java.util.Collections.*;
 import static java.util.Collections.sort;
+
 // used generated regex to generate the numbers I needed for the times in format of (HH:MM:SS)
 //   https://regexr.com/
 //   https://stackoverflow.com/questions/4736/learning-regular-expressions
@@ -34,9 +35,9 @@ public class Main {
                     "PRESS [3]  SEARCH FOR THE ARRIVAL TIME FOR THE BUS AT THE STATION").forEach(System.out::println);
             if (!input.hasNextInt()) {
                 System.out.println("""
-                ***********************************************************\s
-                 THIS IS AN INVALID INPUT. PLEASE TRY AGAIN  \s
-                ***********************************************************""");
+                        ***********************************************************\s
+                         THIS IS AN INVALID INPUT. PLEASE TRY AGAIN  \s
+                        ***********************************************************""");
             } else {
                 var userInterFace = input.nextInt();
                 input.nextLine();
@@ -46,9 +47,9 @@ public class Main {
                         switch (userInterFace) {
                             case 0 -> {
                                 System.out.println("""
-                ***********************************************************\s
-                 BYE. HOPE YOU HAVE A LOVELY DAY ☺ \s
-                ***********************************************************""");
+                                        ***********************************************************\s
+                                         BYE. HOPE YOU HAVE A LOVELY DAY ☺ \s
+                                        ***********************************************************""");
                                 System.exit(0);
                             }
                         }
@@ -69,9 +70,9 @@ public class Main {
 
                                     if (!start.matches(numbers) || !stop.matches(numbers)) {
                                         System.out.println("""
-            ***********************************************************\s
-             ONLY DIGITS ARE ALLOWED!! PLEASE TRY AGAIN
-            ***********************************************************""");
+                                                ***********************************************************\s
+                                                 ONLY DIGITS ARE ALLOWED!! PLEASE TRY AGAIN
+                                                ***********************************************************""");
                                     } else {
                                         if (hashMap.get(start) != null && hashMap.get(stop) != null) {
                                             system = false;
@@ -79,9 +80,9 @@ public class Main {
                                             }
                                         } else {
                                             System.out.println("""
-            ************************************************************************************************\s
-             PLEASE TRT AGAIN WITH A DIFFERENT STOP NUMBER! THE BUS STOPS ENTERED DO NOT EXIST IN THE SYSTEM.
-            ************************************************************************************************""");
+                                                    ************************************************************************************************\s
+                                                     PLEASE TRT AGAIN WITH A DIFFERENT STOP NUMBER! THE BUS STOPS ENTERED DO NOT EXIST IN THE SYSTEM.
+                                                    ************************************************************************************************""");
                                         }
                                     }
                                 } while (system);
@@ -112,8 +113,9 @@ public class Main {
         }
     }
 }
+
 class BusManagement {
-    public static void BusArrival (ArrayList<String> fileList) {
+    public static void BusArrival(ArrayList<String> fileList) {
         sort(fileList);
         System.out.println(
                 "(|Trip ID|Arrival Time|Departure Time|Stop ID|Stop sequence|Stop Headsign" +
@@ -126,7 +128,7 @@ class BusManagement {
             j++;
         }
     }
-    public static ArrayList<String> FileReader (File f) throws IOException {
+    public static ArrayList<String> FileReader(File f) throws IOException {
         ArrayList<String> fileName;
         fileName = (ArrayList<String>) readAllLines(get("stop_times.txt"));
         try
@@ -138,7 +140,8 @@ class BusManagement {
         }
         return fileName;
     }
-    public static void Bus (File f) throws IOException {
+
+    public static void Bus(File f) throws IOException {
         try {
             var busTime = FileReader(f);
             ArrayList<String> results;
@@ -150,9 +153,9 @@ class BusManagement {
                 String busStop = input.next();
                 if (!busStop.matches("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]")) {
                     System.out.println((busStop.charAt(2) == ':') && (busStop.charAt(5) == ':')
-                                       && ((int) busStop.charAt(1) >= 4) ?
+                            && ((int) busStop.charAt(1) >= 4) ?
                             "PLEASE TRY AGAIN AS YOUR INPUT EXCEEDS [23:59:59]!! " : "PLEASE TRY AGAIN AS YOUR INPUT IS " +
-                                                                                     "NOT IN THE FORMAT [****(HH:MM:SS)****]!! ");
+                            "NOT IN THE FORMAT [****(HH:MM:SS)****]!! ");
                 } else {
                     switch (busStop.length()) {
                         case 7 -> busStop += " ";
@@ -169,8 +172,8 @@ class BusManagement {
                 System.out.println("INVALID! PLEASE TRY AGAIN.");
             }
             if (results.size() <= 0) {
-                if(times) {
-                    System.out.println("ARRIVAL TIME ENTERED CAN NOT BE FOUND  " );
+                if (times) {
+                    System.out.println("ARRIVAL TIME ENTERED CAN NOT BE FOUND  ");
                 }
             } else {
                 BusArrival(results);

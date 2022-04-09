@@ -11,15 +11,16 @@ import static java.util.Collections.reverse;
 public class Graph {
     public ArrayList<Double> w;
     public Double c;
-    public HashMap<String,Search> searchMap = new HashMap<>();
+    public HashMap<String, Search> searchMap = new HashMap<>();
     public ArrayList<String[]> busStops;
     public ArrayList<String> firstStop;
     public ArrayList<String> lastStops;
+
     public Graph() {
         return;
     }
-    public Graph(String stopDes, String transfers, String stops) throws FileNotFoundException
-    {
+
+    public Graph(String stopDes, String transfers, String stops) throws FileNotFoundException {
         File file = new File(stopDes);
         Scanner scanner = new Scanner(file);
         if (scanner.hasNextLine()) {
@@ -64,7 +65,7 @@ public class Graph {
             var intersectionA = searchMap.get(firstStop.get(n));
             var intersectionB = searchMap.get(lastStops.get(n));
             var edgeWeight = root.get(n);
-            intersectionA.searchFinder(new Finder(edgeWeight,intersectionB));
+            intersectionA.searchFinder(new Finder(edgeWeight, intersectionB));
             searchMap.put(firstStop.get(n), intersectionA);
             n += 1;
         }
@@ -95,18 +96,19 @@ public class Graph {
             String TripB = busStops.get(m)[0];
             String StopB = busStops.get(m)[1];
             if (!Trip.equals(TripB)) {
-                Trip =TripB;
+                Trip = TripB;
                 a = searchMap.get(StopB);
             } else {
                 Search b = searchMap.get(StopB);
-                a.searchFinder(new Finder(1.0,b));
+                a.searchFinder(new Finder(1.0, b));
 
                 searchMap.put(a.n, a);
                 a = b;
             }
-            m+= 1;
+            m += 1;
         }
     }
+
     public List<Search> shortestPath(Search targetVertex) {
         List<Search> v;
         c = targetVertex.getSP();
@@ -114,6 +116,7 @@ public class Graph {
         reverse(v);
         return v;
     }
+
     public void pathCalculator(Search vertexUsed) {
         vertexUsed.setSP(0);
         PriorityQueue<Search> priorityQueue;

@@ -6,10 +6,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
+
 // https://algs4.cs.princeton.edu/52trie/TST.java.html by Sedgewick and Wayne
 public class TernarySearchTree {
     private Node<String> root;
     private final HashMap<String, String> map = new HashMap<>();
+
     private static class Node<String> {
         private char s;
         private Node<String> l;
@@ -17,6 +19,7 @@ public class TernarySearchTree {
         private Node<String> r;
         private String string;
     }
+
     //if the system found the key in the table , it will  automatically delete the key
     public void set(String key, String string) throws IllegalArgumentException {
         if (key == null) {
@@ -28,6 +31,7 @@ public class TernarySearchTree {
 
         root = set(root, key, string, 0);
     }
+
     // each letter in a key will be added into a tree then it will be associated with a letter
     private Node<String> set(Node<String> node, String k, String string, int g) {
         char a = k.charAt(g);
@@ -50,6 +54,7 @@ public class TernarySearchTree {
         }
         return node;
     }
+
     //if the key is in the table
     public boolean findKey(String key) throws IllegalArgumentException {
         if (key != null) {
@@ -58,6 +63,7 @@ public class TernarySearchTree {
             throw new IllegalArgumentException("NULL");
         }
     }
+
     // if there is a key that matches a string this function should return the string and null if not as
     //I threw an exception
     public String get(String k) throws IllegalArgumentException {
@@ -70,6 +76,7 @@ public class TernarySearchTree {
             throw new IllegalArgumentException("NULL");
         }
     }
+
     // to return the subtire of the  corresponding key
     private Node<String> get(Node<String> node, String k, int g) throws IllegalArgumentException {
         if (node != null) {
@@ -92,6 +99,7 @@ public class TernarySearchTree {
             return null;
         }
     }
+
     // gathering keys that matches the letters to be returned later
     private void gather(Node<String> node, StringBuilder pre, Queue<String> stack) {
         if (node != null) {
@@ -105,6 +113,7 @@ public class TernarySearchTree {
             gather(node.r, pre, stack);
         }
     }
+
     public Iterable<String> mainKeys(String pre) throws IllegalArgumentException { // keys will be returned
         if (pre != null) {
             Queue<String> stack = new LinkedList<>();
@@ -119,6 +128,7 @@ public class TernarySearchTree {
             throw new IllegalArgumentException("NULL");
         }
     }
+
     public List<String> busStopInfo(String input) {
         List<String> stopList = new LinkedList<>();
         for (String information : this.mainKeys(input)) {
@@ -130,7 +140,8 @@ public class TernarySearchTree {
         stopList.add("NO BUS STOP IS RECOGNIZED. PLEASE TRY AGAIN  \n");
         return stopList;
     }
-public TernarySearchTree(String file) {
+
+    public TernarySearchTree(String file) {
         File f = new File(file);
         Scanner scanner;
         scanner = null;
@@ -169,11 +180,11 @@ public TernarySearchTree(String file) {
                 nameOfStop = builder.toString();
                 this.set(nameOfStop, stopStationID);
                 var stopInformation = MessageFormat.format(" ID: {0} CODE : {1} | NAME : {2}  " +
-                                                           "| DESCRIPTION : {3}\n LATITUDE  : {4} | LONGITUDE  : {5}" +
-                                                           " | ZONE : {6} | LOCATION TYPE : {7}\n  " +
-                                                           "-----------------------------------------" +
-                                                           "------------------------------------------------------" +
-                                                           "------------------------------ ",
+                                "| DESCRIPTION : {3}\n LATITUDE  : {4} | LONGITUDE  : {5}" +
+                                " | ZONE : {6} | LOCATION TYPE : {7}\n  " +
+                                "-----------------------------------------" +
+                                "------------------------------------------------------" +
+                                "------------------------------ ",
                         stopStationID, array[1], nameOfStop, array[3], array[4], array[5], array[6], array[8]);
                 map.put(stopStationID, stopInformation);
             } while (scanner.hasNextLine());
