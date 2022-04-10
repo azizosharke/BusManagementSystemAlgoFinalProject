@@ -30,7 +30,7 @@ public class Main {
                      PLEASE SELECT ONE OF THE FOLLOWING OPTIONS BELOW ↓\s
                     ***********************************************************
                     """);
-            Arrays.asList("PRESS [0] TO EXIST THE PROGRAM", "PRESS [1]  FIND THE SHORTEST PATHS BETWEEN TWO BUS STOPS",
+            Arrays.asList("PRESS [0] TO EXIT THE PROGRAM", "PRESS [1]  FIND THE SHORTEST PATHS BETWEEN TWO BUS STOPS",
                     "PRESS [2]  SEARCH FOR THE REQUIRED BUS STOP",
                     "PRESS [3]  SEARCH FOR THE ARRIVAL TIME FOR THE BUS AT THE STATION").forEach(System.out::println);
             if (!input.hasNextInt()) {
@@ -84,14 +84,16 @@ public class Main {
                                                      PLEASE TRT AGAIN WITH A DIFFERENT STOP NUMBER! THE BUS STOPS ENTERED DO NOT EXIST IN THE SYSTEM.
                                                     ************************************************************************************************""");
                                         }
+                                        System.out.println("PATH DO NOT EXIST. PLEASE TRY AGAIN");
+
+
                                     }
                                 } while (system);
                                 Search answer = hashMap.get(start);
                                 Search arrival = hashMap.get(stop);
                                 dijkstra.pathCalculator(answer);
                                 System.out.println(MessageFormat.format("THE OVERALL PATH FROM  {0} TO {1} IS {2}"
-                                        , answer, arrival, dijkstra.shortestPath(arrival)));
-
+                                       , answer, arrival, dijkstra.shortestPath(arrival)));
                                 System.out.println(" [THE OVERALL COST OF THE PATH IS] --> " + dijkstra.c + "\n");
                             }
                             case 2 -> {
